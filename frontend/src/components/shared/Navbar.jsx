@@ -54,7 +54,7 @@ const Navbar = () => {
             <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-4'>
                 {/* Logo */}
                 <Link to="/" className='text-2xl font-extrabold tracking-tight'>
-                    Job<span className='text-[#F83002]'>Portal</span>
+                    Hire<span className='text-[#F83002]'>Hub</span>
                 </Link>
 
                 {/* Desktop links */}
