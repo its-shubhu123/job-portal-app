@@ -4,19 +4,23 @@ import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
 
+// Cookie options that work when frontend (Vercel) and backend (Render) are on different domains
+const cookieOptions = {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+};
+
 export const register = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
-         
+
         if (!fullname || !email || !phoneNumber || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
                 success: false
             });
         };
-        const file = req.file;
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
         const user = await User.findOne({ email });
         if (user) {
@@ -25,6 +29,16 @@ export const register = async (req, res) => {
                 success: false,
             })
         }
+
+        // Profile photo is optional: only upload if a file was sent
+        let profilePhoto = "";
+        const file = req.file;
+        if (file) {
+            const fileUri = getDataUri(file);
+            const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            profilePhoto = cloudResponse.secure_url;
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
 
         await User.create({
@@ -33,8 +47,8 @@ export const register = async (req, res) => {
             phoneNumber,
             password: hashedPassword,
             role,
-            profile:{
-                profilePhoto:cloudResponse.secure_url,
+            profile: {
+                profilePhoto,
             }
         });
 
@@ -44,12 +58,17 @@ export const register = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Server error while creating account.",
+            success: false
+        });
     }
 }
+
 export const login = async (req, res) => {
     try {
         const { email, password, role } = req.body;
-        
+
         if (!email || !password || !role) {
             return res.status(400).json({
                 message: "Something is missing",
@@ -92,38 +111,45 @@ export const login = async (req, res) => {
             profile: user.profile
         }
 
-        return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
+        return res.status(200).cookie("token", token, {
+            ...cookieOptions,
+            maxAge: 1 * 24 * 60 * 60 * 1000,
+        }).json({
             message: `Welcome back ${user.fullname}`,
             user,
             success: true
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Server error while logging in.",
+            success: false
+        });
     }
 }
+
 export const logout = async (req, res) => {
     try {
-        return res.status(200).cookie("token", "", { maxAge: 0 }).json({
+        // Must use the same cookie options, otherwise the browser won't clear it
+        return res.status(200).cookie("token", "", { ...cookieOptions, maxAge: 0 }).json({
             message: "Logged out successfully.",
             success: true
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Server error while logging out.",
+            success: false
+        });
     }
 }
+
 export const updateProfile = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
-        
-        const file = req.file;
-        // cloudinary ayega idhar
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
-
-
 
         let skillsArray;
-        if(skills){
+        if (skills) {
             skillsArray = skills.split(",");
         }
         const userId = req.id; // middleware authentication
@@ -135,19 +161,26 @@ export const updateProfile = async (req, res) => {
                 success: false
             })
         }
+
+        // Resume is optional: only upload if a file was sent
+        const file = req.file;
+        let cloudResponse;
+        if (file) {
+            const fileUri = getDataUri(file);
+            cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        }
+
         // updating data
-        if(fullname) user.fullname = fullname
-        if(email) user.email = email
-        if(phoneNumber)  user.phoneNumber = phoneNumber
-        if(bio) user.profile.bio = bio
-        if(skills) user.profile.skills = skillsArray
-      
-        // resume comes later here...
-        if(cloudResponse){
+        if (fullname) user.fullname = fullname
+        if (email) user.email = email
+        if (phoneNumber) user.phoneNumber = phoneNumber
+        if (bio) user.profile.bio = bio
+        if (skills) user.profile.skills = skillsArray
+
+        if (cloudResponse) {
             user.profile.resume = cloudResponse.secure_url // save the cloudinary url
             user.profile.resumeOriginalName = file.originalname // Save the original file name
         }
-
 
         await user.save();
 
@@ -161,11 +194,15 @@ export const updateProfile = async (req, res) => {
         }
 
         return res.status(200).json({
-            message:"Profile updated successfully.",
+            message: "Profile updated successfully.",
             user,
-            success:true
+            success: true
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Server error while updating profile.",
+            success: false
+        });
     }
 }
