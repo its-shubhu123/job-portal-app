@@ -27,7 +27,7 @@ const quickLinks = [
 
 const Footer = () => {
   return (
-    <footer className="mt-16 border-t border-gray-200 bg-gray-50">
+    <footer className="mt-16 border-t border-border bg-muted/40">
       <div className="mx-auto max-w-7xl px-4 py-12">
         <div className="grid gap-8 md:grid-cols-3">
           {/* Brand */}
@@ -35,14 +35,14 @@ const Footer = () => {
             <h2 className="text-2xl font-extrabold tracking-tight">
               Hire<span className="text-[#F83002]">Hub</span>
             </h2>
-            <p className="mt-3 max-w-xs text-sm text-gray-600">
+            <p className="mt-3 max-w-xs text-sm text-muted-foreground">
               Search openings, apply in a few clicks, and track your applications in one place.
             </p>
           </div>
 
           {/* Quick links */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Quick Links
             </h3>
             <ul className="mt-3 space-y-2">
@@ -50,7 +50,7 @@ const Footer = () => {
                 <li key={item.to}>
                   <Link
                     to={item.to}
-                    className="text-sm text-gray-600 transition hover:text-[#6A38C2]"
+                    className="text-sm text-muted-foreground transition hover:text-[#6A38C2]"
                   >
                     {item.label}
                   </Link>
@@ -61,7 +61,7 @@ const Footer = () => {
 
           {/* Social */}
           <div>
-            <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-900">
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground">
               Follow Us
             </h3>
             <div className="mt-3 flex gap-3">
@@ -72,7 +72,7 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={item.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 transition hover:border-[#6A38C2] hover:bg-[#6A38C2] hover:text-white"
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition hover:border-[#6A38C2] hover:bg-[#6A38C2] hover:text-white"
                 >
                   <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d={item.path} />
@@ -83,7 +83,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-gray-200 pt-6 text-center text-sm text-gray-500">
+        <div className="mt-10 border-t border-border pt-6 text-center text-sm text-muted-foreground">
           © {new Date().getFullYear()} HireHub. All rights reserved.
         </div>
       </div>
