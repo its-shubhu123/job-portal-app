@@ -9,6 +9,7 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
+import ThemeToggle from './ThemeToggle'
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth);
@@ -46,11 +47,11 @@ const Navbar = () => {
         `rounded-full px-4 py-2 text-sm font-medium transition ${
             isActive
                 ? 'bg-[#6A38C2]/10 text-[#6A38C2]'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                : 'text-muted-foreground hover:bg-accent hover:text-foreground'
         }`;
 
     return (
-        <header className='sticky top-0 z-50 border-b border-gray-100 bg-white/80 backdrop-blur'>
+        <header className='sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur'>
             <div className='mx-auto flex h-16 max-w-7xl items-center justify-between px-4'>
                 {/* Logo */}
                 <Link to="/" className='text-2xl font-extrabold tracking-tight'>
@@ -67,6 +68,7 @@ const Navbar = () => {
                 </nav>
 
                 <div className='flex items-center gap-3'>
+                    <ThemeToggle />
                     {
                         !user ? (
                             <div className='hidden items-center gap-2 md:flex'>
@@ -91,12 +93,12 @@ const Navbar = () => {
                                         </div>
                                     </div>
 
-                                    <div className='mt-3 flex flex-col gap-1 border-t pt-3 text-gray-700'>
+                                    <div className='mt-3 flex flex-col gap-1 border-t pt-3 text-foreground'>
                                         {
                                             user && user.role === 'student' && (
                                                 <Link
                                                     to="/profile"
-                                                    className='flex items-center gap-2 rounded-lg px-2 py-2 text-sm transition hover:bg-gray-100'
+                                                    className='flex items-center gap-2 rounded-lg px-2 py-2 text-sm transition hover:bg-accent'
                                                 >
                                                     <User2 className='h-4 w-4' /> View Profile
                                                 </Link>
@@ -104,7 +106,7 @@ const Navbar = () => {
                                         }
                                         <button
                                             onClick={logoutHandler}
-                                            className='flex items-center gap-2 rounded-lg px-2 py-2 text-left text-sm text-red-600 transition hover:bg-red-50'
+                                            className='flex items-center gap-2 rounded-lg px-2 py-2 text-left text-sm text-red-600 transition hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/40'
                                         >
                                             <LogOut className='h-4 w-4' /> Logout
                                         </button>
@@ -116,7 +118,7 @@ const Navbar = () => {
 
                     {/* Mobile menu button */}
                     <button
-                        className='rounded-lg p-2 text-gray-700 hover:bg-gray-100 md:hidden'
+                        className='rounded-lg p-2 text-foreground hover:bg-accent md:hidden'
                         onClick={() => setMenuOpen(!menuOpen)}
                         aria-label="Toggle menu"
                     >
@@ -127,7 +129,7 @@ const Navbar = () => {
 
             {/* Mobile menu panel */}
             {menuOpen && (
-                <div className='border-t border-gray-100 bg-white px-4 pb-4 md:hidden'>
+                <div className='border-t border-border bg-card px-4 pb-4 md:hidden'>
                     <nav className='flex flex-col gap-1 pt-3'>
                         {links.map((item) => (
                             <NavLink

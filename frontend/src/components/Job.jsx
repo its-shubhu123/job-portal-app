@@ -19,16 +19,16 @@ const Job = ({ job }) => {
     const postedLabel = daysAgo === 0 ? "Today" : daysAgo === 1 ? "1 day ago" : `${daysAgo} days ago`;
 
     return (
-        <div className='group flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-5 shadow-md transition duration-200 hover:-translate-y-1 hover:border-[#6A38C2]/30 hover:shadow-xl'>
+        <div className='group flex h-full flex-col rounded-2xl border border-border bg-card p-5 shadow-md transition duration-200 hover:-translate-y-1 hover:border-[#6A38C2]/30 hover:shadow-xl'>
             {/* Top row: posted time and bookmark */}
             <div className='flex items-center justify-between'>
-                <span className='rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-600'>
+                <span className='rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground'>
                     {postedLabel}
                 </span>
                 <Button
                     variant="ghost"
                     size="icon"
-                    className="rounded-full text-gray-500 hover:bg-[#6A38C2]/10 hover:text-[#6A38C2]"
+                    className="rounded-full text-muted-foreground hover:bg-[#6A38C2]/10 hover:text-[#6A38C2]"
                     aria-label="Bookmark job"
                 >
                     <Bookmark className='h-5 w-5' />
@@ -37,32 +37,32 @@ const Job = ({ job }) => {
 
             {/* Company */}
             <div className='mt-4 flex items-center gap-3'>
-                <div className='flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-gray-200 bg-white'>
+                <div className='flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-border bg-card'>
                     <Avatar className="h-9 w-9">
                         <AvatarImage src={job?.company?.logo} />
                     </Avatar>
                 </div>
                 <div className='min-w-0'>
-                    <h2 className='truncate font-semibold text-gray-900'>{job?.company?.name}</h2>
-                    <p className='text-sm text-gray-500'>India</p>
+                    <h2 className='truncate font-semibold text-foreground'>{job?.company?.name}</h2>
+                    <p className='text-sm text-muted-foreground'>India</p>
                 </div>
             </div>
 
             {/* Title and description */}
             <div className='mt-4 flex-1'>
-                <h1 className='text-lg font-bold text-gray-900'>{job?.title}</h1>
-                <p className='mt-1 line-clamp-2 text-sm text-gray-600'>{job?.description}</p>
+                <h1 className='text-lg font-bold text-foreground'>{job?.title}</h1>
+                <p className='mt-1 line-clamp-2 text-sm text-muted-foreground'>{job?.description}</p>
             </div>
 
             {/* Badges */}
             <div className='mt-4 flex flex-wrap items-center gap-2'>
-                <Badge className='bg-blue-50 font-semibold text-blue-700 hover:bg-blue-50' variant="ghost">
+                <Badge className='bg-blue-50 font-semibold text-blue-700 hover:bg-blue-50 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-950/50' variant="ghost">
                     {job?.position} {job?.position === 1 ? "Position" : "Positions"}
                 </Badge>
-                <Badge className='bg-orange-50 font-semibold text-[#F83002] hover:bg-orange-50' variant="ghost">
+                <Badge className='bg-orange-50 font-semibold text-[#F83002] hover:bg-orange-50 dark:bg-orange-950/50 dark:text-orange-300 dark:hover:bg-orange-950/50' variant="ghost">
                     {job?.jobType}
                 </Badge>
-                <Badge className='bg-purple-50 font-semibold text-[#7209b7] hover:bg-purple-50' variant="ghost">
+                <Badge className='bg-purple-50 font-semibold text-[#7209b7] hover:bg-purple-50 dark:bg-purple-950/50 dark:text-purple-300 dark:hover:bg-purple-950/50' variant="ghost">
                     {job?.salary} LPA
                 </Badge>
             </div>
