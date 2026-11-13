@@ -1,4 +1,4 @@
-export const USER_API_END_POINT="https://job-portal-project-1-hmp5.onrender.com/api/v1/user";
-export const JOB_API_END_POINT="https://job-portal-project-1-hmp5.onrender.com/api/v1/job";
-export const APPLICATION_API_END_POINT="https://job-portal-project-1-hmp5.onrender.com/api/v1/application";
-export const COMPANY_API_END_POINT="https://job-portal-project-1-hmp5.onrender.com/api/v1/company";
+export const USER_API_END_POINT = "https://job-portal-app-2z47.onrender.com/api/v1/user";
+export const JOB_API_END_POINT = "https://job-portal-app-2z47.onrender.com/api/v1/job";
+export const APPLICATION_API_END_POINT = "https://job-portal-app-2z47.onrender.com/api/v1/application";
+export const COMPANY_API_END_POINT = "https://job-portal-app-2z47.onrender.com/api/v1/company";
