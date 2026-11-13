@@ -33,7 +33,7 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h2 className="text-2xl font-extrabold tracking-tight">
-              Job<span className="text-[#F83002]">Portal</span>
+              Hire<span className="text-[#F83002]">Hub</span>
             </h2>
             <p className="mt-3 max-w-xs text-sm text-gray-600">
               Search openings, apply in a few clicks, and track your applications in one place.
@@ -84,7 +84,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-10 border-t border-gray-200 pt-6 text-center text-sm text-gray-500">
-          © {new Date().getFullYear()} JobPortal. All rights reserved.
+          © {new Date().getFullYear()} HireHub. All rights reserved.
         </div>
       </div>
     </footer>
